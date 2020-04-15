@@ -21,11 +21,6 @@ public class RequestController {
         return DBAccess.userExistsInDB(id);
     }
 
-    @GetMapping("/test")
-    public String testy() {
-        return "OK";
-    }
-
     @GetMapping("/userCourses/{id}")
     private List<Integer> userCourses (@PathVariable String id) {
         return DBAccess.userCourses(id);

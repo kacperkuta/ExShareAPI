@@ -67,7 +67,7 @@ public class DBAccess {
 
     public static boolean userExistsInDB(String userId) {
         initJdbcTemplate();
-        List<Customer> cc = jdbcTemplate.query("SELECT user_id from exshare_user WHERE user_id = \'" + userId +"\';", (rs, rownum) -> new Customer());
+        List<Object> cc = jdbcTemplate.query("SELECT user_id from exshare_user WHERE user_id = \'" + userId +"\';", (rs, rownum) -> new Object());
         return !cc.isEmpty();
     }
     
@@ -76,14 +76,17 @@ public class DBAccess {
         return jdbcTemplate.query("SELECT course_id from user_course WHERE user_id = \'" + userId +"\';", (rs, rownum) -> rs.getInt(1));
     }
 
-/*
-    public static void main(String[] args) {
-        addCourseToUser("Dummy user", 1456);
-        List<Integer> c = userCourses("Dummy user");
-        for (Integer i : c) {
-            System.out.println(i);
-        }
+    public static void resetDB() {
+        initJdbcTemplate();
+        jdbcTemplate.execute("DROP TABLE exshare_user");
+        jdbcTemplate.execute("DROP TABLE user_course");
+        createTables();
     }
-*/
+
+
+    public static void main(String[] args) {
+        resetDB();
+    }
+
 
 }
