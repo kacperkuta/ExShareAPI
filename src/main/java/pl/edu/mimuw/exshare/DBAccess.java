@@ -67,28 +67,14 @@ public class DBAccess {
 
     public static boolean userExistsInDB(String userId) {
         initJdbcTemplate();
-        List<Customer> cc = jdbcTemplate.query("SELECT " + userId + " from user_course;", (rs, rownum) -> {
-            Customer c = new Customer();
-            c.setId(rs.getString(1));
-            c.setCourse_id(rs.getInt(2));
-            return c;
-        });
+        List<Customer> cc = jdbcTemplate.query("SELECT user_id from exshare_user WHERE user_id = \'" + userId +"\';", (rs, rownum) -> new Customer());
         return !cc.isEmpty();
     }
-/*
-    public static void main(String[] args) {
-        initJdbcTemplate();
-        List<Customer> cc = jdbcTemplate.query("SELECT * from user_course;", new RowMapper<Customer>() {
-            @Override
-            public Customer mapRow(ResultSet rs, int rownum) throws SQLException {
-                Customer c = new Customer();
-                c.setId(rs.getString(1));
-                c.setCourse_id(rs.getInt(2));
-                return c;
-            }
-        });
 
-        System.out.println(cc.get(0).course_id);
+    /*
+    public static void main(String[] args) {
+        System.out.println(userExistsInDB("dummy"));
     }
- */
+     */
+
 }
