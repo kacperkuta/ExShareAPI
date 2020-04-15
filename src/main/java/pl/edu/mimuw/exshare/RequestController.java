@@ -11,8 +11,8 @@ public class RequestController {
         DBAccess.addUser(id);
     }
 
-    @PutMapping("/assignUserToCourse")
-    private void assignUser(@RequestParam String user_id, @RequestParam int course_id) {
+    @PutMapping("/assignUserToCourse/{user_id}/{course_id}")
+    private void assignUser(@PathVariable String user_id, @PathVariable int course_id) {
         DBAccess.addCourseToUser(user_id, course_id);
     }
 
