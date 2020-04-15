@@ -47,19 +47,19 @@ public class DBAccess {
         }
     }
 
-    public static void addUser(String userID) {
+    public static void addUser(String userId) {
         initJdbcTemplate();
         try {
-            jdbcTemplate.update("INSERT into exshare_user (user_id) VALUES (?)", userID);
+            jdbcTemplate.update("INSERT into exshare_user (user_id) VALUES (?)", userId);
         } catch (Exception e) {
             System.err.println("Adding user failed with msg " + e.getMessage());
         }
     }
 
-    public static void addCourseToUser(String userID, int courseID) {
+    public static void addCourseToUser(String userId, int courseId) {
         initJdbcTemplate();
         try {
-            jdbcTemplate.update("INSERT into user_course (user_id, course_id) VALUES (?, ?)", userID, courseID);
+            jdbcTemplate.update("INSERT into user_course (user_id, course_id) VALUES (?, ?)", userId, courseId);
         } catch (Exception e) {
             System.err.println("Adding user failed with msg " + e.getMessage());
         }
@@ -70,11 +70,20 @@ public class DBAccess {
         List<Customer> cc = jdbcTemplate.query("SELECT user_id from exshare_user WHERE user_id = \'" + userId +"\';", (rs, rownum) -> new Customer());
         return !cc.isEmpty();
     }
-
-    /*
-    public static void main(String[] args) {
-        System.out.println(userExistsInDB("dummy"));
+    
+    public static List<Integer> userCourses(String userId) {
+        initJdbcTemplate();
+        return jdbcTemplate.query("SELECT course_id from user_course WHERE user_id = \'" + userId +"\';", (rs, rownum) -> rs.getInt(1));
     }
-     */
+
+/*
+    public static void main(String[] args) {
+        addCourseToUser("Dummy user", 1456);
+        List<Integer> c = userCourses("Dummy user");
+        for (Integer i : c) {
+            System.out.println(i);
+        }
+    }
+*/
 
 }

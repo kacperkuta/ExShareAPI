@@ -2,6 +2,8 @@ package pl.edu.mimuw.exshare;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class RequestController {
     @PutMapping("/addUser/{id}")
@@ -22,5 +24,10 @@ public class RequestController {
     @GetMapping("/test")
     public String testy() {
         return "OK";
+    }
+
+    @GetMapping("/userCourses/{id}")
+    private List<Integer> userCourses (@PathVariable String id) {
+        return DBAccess.userCourses(id);
     }
 }
