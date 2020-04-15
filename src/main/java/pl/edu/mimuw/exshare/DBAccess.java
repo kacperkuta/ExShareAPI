@@ -3,7 +3,12 @@ package pl.edu.mimuw.exshare;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 public class DBAccess {
 
@@ -58,6 +63,17 @@ public class DBAccess {
         } catch (Exception e) {
             System.err.println("Adding user failed with msg " + e.getMessage());
         }
+    }
+
+    public static boolean userExistsInDB(String userId) {
+        initJdbcTemplate();
+        List<Customer> cc = jdbcTemplate.query("SELECT " + userId + " from user_course;", (rs, rownum) -> {
+            Customer c = new Customer();
+            c.setId(rs.getString(1));
+            c.setCourse_id(rs.getInt(2));
+            return c;
+        });
+        return !cc.isEmpty();
     }
 /*
     public static void main(String[] args) {

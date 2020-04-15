@@ -13,4 +13,14 @@ public class RequestController {
     private void assignUser(@RequestParam String user_id, @RequestParam int course_id) {
         DBAccess.addCourseToUser(user_id, course_id);
     }
+
+    @GetMapping("/userExists/{id}")
+    private boolean userExists(@PathVariable String id) {
+        return DBAccess.userExistsInDB(id);
+    }
+
+    @GetMapping("/test")
+    public String testy() {
+        return "OK";
+    }
 }
