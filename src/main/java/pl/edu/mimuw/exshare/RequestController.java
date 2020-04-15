@@ -1,0 +1,16 @@
+package pl.edu.mimuw.exshare;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class RequestController {
+    @PutMapping("/addUser/{id}")
+    private void addUser(@PathVariable String id) {
+        DBAccess.addUser(id);
+    }
+
+    @PutMapping("/assignUserToCourse")
+    private void assignUser(@RequestParam String user_id, @RequestParam int course_id) {
+        DBAccess.addCourseToUser(user_id, course_id);
+    }
+}
