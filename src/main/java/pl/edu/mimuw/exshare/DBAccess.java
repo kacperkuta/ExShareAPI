@@ -33,8 +33,7 @@ public class DBAccess {
 
         try {
             jdbcTemplate.execute("create table exshare_user (\n" +
-                    "user_id VARCHAR (100) UNIQUE NOT NULL,\n" +
-                    "course_id INTEGER);");
+                    "user_id VARCHAR (100) UNIQUE NOT NULL);");
         } catch (Exception e) {
             System.err.println("Creating exshare_user corrupted. Exception msg: " + e.getMessage());
         }
@@ -56,12 +55,31 @@ public class DBAccess {
         }
     }
 
+    public static void deleteUser(String userId) {
+        initJdbcTemplate();
+        try {
+            jdbcTemplate.update("DELETE from exshare_user WHERE user_id = ?", userId);
+            jdbcTemplate.update("DELETE from user_course WHERE user_id = ?", userId);
+        } catch (Exception e) {
+            System.err.println("Deleting user failed with msg " + e.getMessage());
+        }
+    }
+
     public static void addCourseToUser(String userId, int courseId) {
         initJdbcTemplate();
         try {
             jdbcTemplate.update("INSERT into user_course (user_id, course_id) VALUES (?, ?)", userId, courseId);
         } catch (Exception e) {
             System.err.println("Adding user failed with msg " + e.getMessage());
+        }
+    }
+
+    public static void removeUserFromCourse(String userId, int courseId) {
+        initJdbcTemplate();
+        try {
+            jdbcTemplate.update("DELETE from user_course WHERE user_id = ? and course_id = ?", userId, courseId);
+        } catch (Exception e) {
+            System.err.println("Deleting relation failed with msg " + e.getMessage());
         }
     }
 
@@ -78,11 +96,18 @@ public class DBAccess {
 
     public static void resetDB() {
         initJdbcTemplate();
-        jdbcTemplate.execute("DROP TABLE exshare_user");
-        jdbcTemplate.execute("DROP TABLE user_course");
+        try {
+            jdbcTemplate.execute("DROP TABLE exshare_user");
+        } catch (Exception e) {
+            System.err.println("Deleting table failed: " + e.getMessage());
+        }
+        try {
+            jdbcTemplate.execute("DROP TABLE user_course");
+        } catch (Exception e) {
+            System.err.println("Deleting table failed: " + e.getMessage());
+        }
         createTables();
     }
-
 
     public static void main(String[] args) {
         resetDB();
