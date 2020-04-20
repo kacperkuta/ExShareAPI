@@ -1,9 +1,7 @@
 package pl.edu.mimuw.exshare;
 
-import org.postgresql.util.PSQLException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import java.util.Set;
 
 @RestController
 public class RequestController {
@@ -13,7 +11,7 @@ public class RequestController {
     }
 
     @PutMapping("/assignUserToCourse/{user_id}/{course_id}")
-    private void assignUser(@PathVariable String user_id, @PathVariable int course_id) {
+    private void assignUser(@PathVariable String user_id, @PathVariable int course_id) throws DBAccessException {
         DBAccess.addCourseToUser(user_id, course_id);
     }
 
@@ -23,7 +21,7 @@ public class RequestController {
     }
 
     @GetMapping("/userCourses/{id}")
-    private List<Integer> userCourses (@PathVariable String id) {
+    private Set<Integer> userCourses (@PathVariable String id) throws DBAccessException {
         return DBAccess.userCourses(id);
     }
 }

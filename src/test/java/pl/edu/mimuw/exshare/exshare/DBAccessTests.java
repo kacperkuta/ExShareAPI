@@ -10,6 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
+import pl.edu.mimuw.exshare.DBAccessException;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -140,7 +143,7 @@ class DBAccessTests {
         try {
             DBAccess.addCourseToUser(userId, 123);
             fail("Null userId in relation userId-courseId is not valid!");
-        } catch (DataAccessException ignore) {
+        } catch (DBAccessException ignore) {
             //Everything is ok
         }
     }
@@ -149,9 +152,54 @@ class DBAccessTests {
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     @Order(10)
     void assignCourseToUser(int courseId) {
-        DBAccess.addCourseToUser("dummy1", courseId);
+        try {
+            DBAccess.addUser("dummy1");
+            if (courseId > 1)
+                fail("'dummy1' should exist.");
+        } catch (DataAccessException ignore) {
+            //Possibly dummy1 exists.
+        }
+        try {
+            DBAccess.addCourseToUser("dummy1", courseId);
+        } catch (DBAccessException e) {
+            fail("Correct course to user assignement throws.");
+        }
     }
 
+    @Test
+    @Order(11)
+    void checkUserCourses() {
+        try {
+            Set<Integer> coursesSet = DBAccess.userCourses("dummy1");
+            List<Integer> sourceList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            Set<Integer> relativeSet = new HashSet<Integer>(sourceList);
 
+            assert coursesSet.equals(relativeSet);
+        } catch (DBAccessException e) {
+            fail("Correct user course check fails.");
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @Order(12)
+    void deleteUserToCourseAssignement(int courseId) {
+        try {
+            DBAccess.removeUserFromCourse("dummy1", courseId);
+        } catch (DBAccessException e) {
+            fail("Correct removing course to user assignement fails.");
+        }
+    }
+
+    @Test
+    @Order(13)
+    void checkLackOfUserCourses() {
+        try {
+            Set<Integer> coursesSet = DBAccess.userCourses("dummy1");
+            assert coursesSet.isEmpty();
+        } catch (DBAccessException e) {
+            fail("Correct user courses query fails.");
+        }
+    }
 }
 
