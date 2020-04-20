@@ -3,11 +3,8 @@ package pl.edu.mimuw.exshare;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class DBAccess {
@@ -48,11 +45,7 @@ public class DBAccess {
 
     public static void addUser(String userId) {
         initJdbcTemplate();
-        try {
-            jdbcTemplate.update("INSERT into exshare_user (user_id) VALUES (?)", userId);
-        } catch (Exception e) {
-            System.err.println("Adding user failed with msg " + e.getMessage());
-        }
+        jdbcTemplate.update("INSERT into exshare_user (user_id) VALUES (?)", userId);
     }
 
     public static void deleteUser(String userId) {
@@ -110,8 +103,7 @@ public class DBAccess {
     }
 
     public static void main(String[] args) {
-        resetDB();
+        addUser("toto");
+        addUser("toto");
     }
-
-
 }
