@@ -24,4 +24,9 @@ public class RequestController {
     private Set<Integer> userCourses (@PathVariable String id) throws DBAccessException {
         return DBAccess.userCourses(id);
     }
+
+    @GetMapping("/")
+    private String testy() {
+        return "Hello world";
+    }
 }
