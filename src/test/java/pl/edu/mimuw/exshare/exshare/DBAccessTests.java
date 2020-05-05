@@ -1,6 +1,5 @@
-package pl.edu.mimuw.exshare.exshare;
+/*package pl.edu.mimuw.exshare.exshare;
 import org.junit.jupiter.params.provider.NullSource;
-import pl.edu.mimuw.exshare.DBAccess;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -203,3 +202,4 @@ class DBAccessTests {
     }
 }
 
+*/
