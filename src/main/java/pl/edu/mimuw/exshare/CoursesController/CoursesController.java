@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.mimuw.exshare.AssignementsController.AssignementsRepository;
 import pl.edu.mimuw.exshare.AssignementsController.UserCourseAssignement;
+import pl.edu.mimuw.exshare.DBAccessException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -48,10 +49,15 @@ public class CoursesController {
     }
 
     @GetMapping("/getCourseName/{courseId}")
-    public String courseName(@PathVariable int courseId) {
+    public String courseName(@PathVariable int courseId) throws DBAccessException {
         Optional<Course> c =  coursesRepository.findById(courseId);
-        return c.map(Course::getCourseName).orElse(null);
+        if (c.isPresent()) {
+            return c.get().getCourseName();
+        } else {
+            throw new DBAccessException("No such course");
+        }
     }
+
 }
 
 
