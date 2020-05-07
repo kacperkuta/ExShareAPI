@@ -13,6 +13,9 @@ public class CoursesRepositoryCustomImpl implements CoursesRepositoryCustom {
     @Transactional
     public int getNumber(String courseName, String userId, AssignementsRepository assignementsRepository) {
         Course last = coursesRepository.findFirstByOrderByCourseIdDesc();
+        if (last == null) {
+            last = new Course(0, "dummy");
+        }
         coursesRepository.save(new Course(last.getCourseId() + 1, courseName));
         assignementsRepository.save(new UserCourseAssignement(userId, last.getCourseId() + 1));
         return last.getCourseId() + 1;
