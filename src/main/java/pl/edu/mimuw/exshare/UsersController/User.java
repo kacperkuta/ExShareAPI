@@ -1,4 +1,4 @@
-package pl.edu.mimuw.exshare;
+package pl.edu.mimuw.exshare.UsersController;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

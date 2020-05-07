@@ -1,4 +1,4 @@
-package pl.edu.mimuw.exshare;
+package pl.edu.mimuw.exshare.AssignementsController;
 
 import java.io.Serializable;
 import java.util.Objects;

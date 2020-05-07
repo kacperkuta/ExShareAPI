@@ -6,7 +6,7 @@ public class DBAccessException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Databse acces exception with message: " + message;
+        return message;
     }
 
     public DBAccessException (String message) {

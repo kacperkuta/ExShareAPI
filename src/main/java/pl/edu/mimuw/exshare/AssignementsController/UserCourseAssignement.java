@@ -1,4 +1,4 @@
-package pl.edu.mimuw.exshare;
+package pl.edu.mimuw.exshare.AssignementsController;
 
 import javax.persistence.*;
 

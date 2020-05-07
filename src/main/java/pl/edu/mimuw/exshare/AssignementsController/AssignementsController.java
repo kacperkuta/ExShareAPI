@@ -1,37 +1,25 @@
-package pl.edu.mimuw.exshare;
+package pl.edu.mimuw.exshare.AssignementsController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.mimuw.exshare.DBAccessException;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @RestController
-public class UserController {
+public class AssignementsController {
 
     @Autowired
-    IUsersRepository usersRepository;
-    
-    @Autowired
-    IAssignementsRepository assignementsRepository;
-
-    @GetMapping("/userExists/{userId}")
-    public boolean userExists(@PathVariable String userId) {
-        return usersRepository.existsById(userId);
-    }
-
-    @PutMapping("/addUser/{userId}")
-    public void addUser(@PathVariable String userId) {
-        usersRepository.save(new User(userId));
-    }
+    AssignementsRepository assignementsRepository;
 
     @PutMapping("/assignUserToCourse/{user_id}/{course_id}")
-    public void assignUser(@PathVariable String user_id, @PathVariable int course_id) {
-        assignementsRepository.save(new UserCourseAssignement(user_id, course_id));
+    public void assignUser(@PathVariable String user_id, @PathVariable int course_id) throws DBAccessException {
+        assignementsRepository.assignUserToCourse(user_id, course_id);
     }
 
     @GetMapping("/userCourses/{userId}")
@@ -43,5 +31,4 @@ public class UserController {
         }
         return coursesSet;
     }
-
 }
