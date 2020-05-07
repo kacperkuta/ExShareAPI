@@ -12,21 +12,22 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-public class AssignementsController {
+public class AssignmentsController {
 
     @Autowired
-    AssignementsRepository assignementsRepository;
+    AssignmentsRepository assignmentsRepository;
 
     @PutMapping("/assignUserToCourse/{user_id}/{course_id}")
     public void assignUser(@PathVariable String user_id, @PathVariable int course_id) throws DBAccessException {
-        assignementsRepository.assignUserToCourse(user_id, course_id);
+        assignmentsRepository.assignUserToCourse(user_id, course_id);
     }
+
 
     @GetMapping("/userCourses/{userId}")
     public Set<Integer> userCourses(@PathVariable String userId) {
-        List<UserCourseAssignement> userCourses =  assignementsRepository.findByUserId(userId);
+        List<UserCourseAssignment> userCourses =  assignmentsRepository.findByUserId(userId);
         Set<Integer> coursesSet = new HashSet<>();
-        for (UserCourseAssignement el : userCourses) {
+        for (UserCourseAssignment el : userCourses) {
             coursesSet.add(el.getCourseId());
         }
         return coursesSet;

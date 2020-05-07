@@ -4,6 +4,6 @@ import org.springframework.stereotype.Repository;
 import pl.edu.mimuw.exshare.DBAccessException;
 
 @Repository
-public interface AssignementsRepositoryCustom {
+public interface AssignmentsRepositoryCustom {
     void assignUserToCourse(String userId, int courseId) throws DBAccessException;
 }

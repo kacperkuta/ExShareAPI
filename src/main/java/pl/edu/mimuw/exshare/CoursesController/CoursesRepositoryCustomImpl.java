@@ -2,8 +2,9 @@ package pl.edu.mimuw.exshare.CoursesController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import pl.edu.mimuw.exshare.AssignementsController.AssignementsRepository;
-import pl.edu.mimuw.exshare.AssignementsController.UserCourseAssignement;
+import pl.edu.mimuw.exshare.AssignementsController.AssignmentsRepository;
+import pl.edu.mimuw.exshare.AssignementsController.UserCourseAssignment;
+
 
 public class CoursesRepositoryCustomImpl implements CoursesRepositoryCustom {
 
@@ -11,13 +12,13 @@ public class CoursesRepositoryCustomImpl implements CoursesRepositoryCustom {
     CoursesRepositoryBasic coursesRepository;
 
     @Transactional
-    public int getNumber(String userId, String courseName, AssignementsRepository assignementsRepository) {
+    public int getNumber(String userId, String courseName, AssignmentsRepository assignementsRepository) {
         Course last = coursesRepository.findFirstByOrderByCourseIdDesc();
         if (last == null) {
             last = new Course(0, "dummy");
         }
         coursesRepository.save(new Course(last.getCourseId() + 1, courseName));
-        assignementsRepository.save(new UserCourseAssignement(userId, last.getCourseId() + 1));
+        assignementsRepository.save(new UserCourseAssignment(userId, last.getCourseId() + 1));
         return last.getCourseId() + 1;
     }
 }

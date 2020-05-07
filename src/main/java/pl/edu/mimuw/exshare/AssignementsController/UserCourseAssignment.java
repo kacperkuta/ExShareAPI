@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_course")
-@IdClass(UserCourseAssignementId.class)
-public class UserCourseAssignement {
+@IdClass(UserCourseAssignmentId.class)
+public class UserCourseAssignment {
     @Id
     @Column(name = "user_id")
     private final String userId;
@@ -14,12 +14,12 @@ public class UserCourseAssignement {
     @Column(name = "course_id")
     private final int courseId;
 
-    public UserCourseAssignement(String userId, int courseId) {
+    public UserCourseAssignment(String userId, int courseId) {
         this.userId = userId;
         this.courseId = courseId;
     }
 
-    public UserCourseAssignement() {
+    public UserCourseAssignment() {
         userId = "fake";
         courseId = 0;
     }

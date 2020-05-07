@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.mimuw.exshare.AssignementsController.AssignementsRepository;
-import pl.edu.mimuw.exshare.AssignementsController.UserCourseAssignement;
+import pl.edu.mimuw.exshare.AssignementsController.AssignmentsRepository;
+import pl.edu.mimuw.exshare.AssignementsController.UserCourseAssignment;
 import pl.edu.mimuw.exshare.DBAccessException;
 
 import java.util.HashSet;
@@ -21,12 +21,7 @@ public class CoursesController {
     CoursesRepository coursesRepository;
 
     @Autowired
-    AssignementsRepository assignementsRepository;
-
-    @PutMapping ("/addCourse/{courseId}/{courseName}")
-    public void addCourse(@PathVariable int courseId, @PathVariable String courseName) {
-        coursesRepository.save(new Course(courseId, courseName));
-    }
+    AssignmentsRepository assignmentsRepository;
 
     @GetMapping("/courseExists/{courseId}")
     public boolean courseExists(@PathVariable int courseId) {
@@ -35,9 +30,9 @@ public class CoursesController {
 
     @GetMapping("/courseUsers/{courseId}")
     public Set<String> courseUsers(@PathVariable int courseId) {
-        List<UserCourseAssignement> usersList = assignementsRepository.findByCourseId(courseId);
+        List<UserCourseAssignment> usersList = assignmentsRepository.findByCourseId(courseId);
         Set<String> usersSet = new HashSet<>();
-        for (UserCourseAssignement el : usersList) {
+        for (UserCourseAssignment el : usersList) {
             usersSet.add(el.getUserId());
         }
         return usersSet;
@@ -45,7 +40,7 @@ public class CoursesController {
 
     @GetMapping("/getNewCourse/{userId}/{courseName}")
     public int newCourse(@PathVariable String userId, @PathVariable String courseName) {
-        return coursesRepository.getNumber(userId, courseName, assignementsRepository);
+        return coursesRepository.getNumber(userId, courseName, assignmentsRepository);
     }
 
     @GetMapping("/getCourseName/{courseId}")

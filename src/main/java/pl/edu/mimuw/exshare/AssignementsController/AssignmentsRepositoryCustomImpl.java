@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edu.mimuw.exshare.DBAccessException;
 
-public class AssignementsRepositoryCustomImpl implements AssignementsRepositoryCustom {
+public class AssignmentsRepositoryCustomImpl implements AssignmentsRepositoryCustom {
 
     @Autowired
-    AssignementsRepositoryBasic assignementsRepository;
+    AssignmentsRepositoryBasic assignmentsRepository;
 
     @Transactional
     public void assignUserToCourse(String userId, int courseId) throws DBAccessException {
-        if (assignementsRepository.findFirstByCourseId(courseId) == null) {
+        if (assignmentsRepository.findFirstByCourseId(courseId) == null) {
             throw new DBAccessException("No such course");
         }
-        assignementsRepository.save(new UserCourseAssignement(userId, courseId));
+        assignmentsRepository.save(new UserCourseAssignment(userId, courseId));
     }
 }

@@ -3,16 +3,16 @@ package pl.edu.mimuw.exshare.AssignementsController;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UserCourseAssignementId implements Serializable {
+public class UserCourseAssignmentId implements Serializable {
     private String userId;
     private int courseId;
 
-    public UserCourseAssignementId(String userId, int courseId) {
+    public UserCourseAssignmentId(String userId, int courseId) {
         this.userId = userId;
         this.courseId = courseId;
     }
 
-    public UserCourseAssignementId() {
+    public UserCourseAssignmentId() {
     }
 
     @Override
@@ -21,7 +21,7 @@ public class UserCourseAssignementId implements Serializable {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        UserCourseAssignementId id = (UserCourseAssignementId)o;
+        UserCourseAssignmentId id = (UserCourseAssignmentId)o;
         return id.courseId == courseId && id.userId.equals(userId);
     }
 
