@@ -10,6 +10,7 @@ import pl.edu.mimuw.exshare.AssignementsController.UserCourseAssignement;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -46,6 +47,11 @@ public class CoursesController {
         return coursesRepository.getNumber(userId, courseName, assignementsRepository);
     }
 
+    @GetMapping("/getCourseName/{courseId}")
+    public String courseName(@PathVariable int courseId) {
+        Optional<Course> c =  coursesRepository.findById(courseId);
+        return c.map(Course::getCourseName).orElse(null);
+    }
 }
 
 

@@ -7,10 +7,10 @@ import javax.persistence.*;
 public class Course {
     @Id
     @Column(name = "course_id")
-    int courseId;
+    private int courseId;
 
     @Column(name = "course_name")
-    String courseName;
+    private String courseName;
 
     public Course(int courseId, String courseName) {
         this.courseId = courseId;
@@ -18,6 +18,10 @@ public class Course {
     }
 
     public Course() {
+    }
+
+    public String getCourseName() {
+        return courseName;
     }
 
     public int getCourseId() {
